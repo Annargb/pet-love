@@ -11,17 +11,29 @@ const props = defineProps({
 
 const src = computed(() => ({
   mobile1x:
-    props.animal === 'dog' ? '/images/mobile/dog-1-mobile-1x.png' : '/images/cat-mobile-1x.jpg',
+    props.animal === 'dog'
+      ? '/images/mobile/dog-1-mobile-1x.png'
+      : '/images/mobile/cat-1-mobile-1x.png',
   mobile2x:
-    props.animal === 'dog' ? '/images/mobile/dog-1-mobile-2x.png' : '/images/cat-mobile-2x.jpg',
+    props.animal === 'dog'
+      ? '/images/mobile/dog-1-mobile-2x.png'
+      : '/images/mobile/cat-1-mobile-2x.png',
   tablet1x:
-    props.animal === 'dog' ? '/images/tablet/dog-1-tablet-1x.png' : '/images/cat-tablet-1x.jpg',
+    props.animal === 'dog'
+      ? '/images/tablet/dog-1-tablet-1x.png'
+      : '/images/tablet/cat-1-tablet-1x.png',
   tablet2x:
-    props.animal === 'dog' ? '/images/tablet/dog-1-tablet-2x.png' : '/images/cat-tablet-2x.jpg',
+    props.animal === 'dog'
+      ? '/images/tablet/dog-1-tablet-2x.png'
+      : '/images/tablet/cat-1-tablet-2x.png',
   desktop1x:
-    props.animal === 'dog' ? '/images/desktop/dog-1-desktop-1x.png' : '/images/cat-desktop-1x.jpg',
+    props.animal === 'dog'
+      ? '/images/desktop/dog-1-desktop-1x.png'
+      : '/images/desktop/cat-1-desktop-1x.png',
   desktop2x:
-    props.animal === 'dog' ? '/images/desktop/dog-1-desktop-2x.png' : '/images/cat-desktop-2x.jpg',
+    props.animal === 'dog'
+      ? '/images/desktop/dog-1-desktop-2x.png'
+      : '/images/desktop/cat-1-desktop-2x.png',
 }))
 
 const alt = computed(() => (props.animal === 'dog' ? 'Dog' : 'Cat'))
