@@ -8,7 +8,7 @@ import PetBlock from './components/PetBlock.vue'
   <AppContainer>
     <MainHeader />
     <main>
-      <PetBlock animal="cat" />
+      <PetBlock animal="dog" />
     </main>
   </AppContainer>
 </template>
