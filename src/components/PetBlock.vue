@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { computed } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 
 const props = defineProps({
   animal: {
@@ -9,69 +10,46 @@ const props = defineProps({
   },
 })
 
-const windowWidth = ref(window.innerWidth)
-
-const updateWidth = () => {
-  windowWidth.value = window.innerWidth
+const petData = {
+  dog: {
+    name: 'Rich',
+    birthday: '21.09.2020',
+    description:
+      'Rich would be the perfect addition to an active family that loves to play and go on walks. I bet he would love having a doggy playmate too!',
+    icon1x: './images/universal/dog-icon-1x.png',
+    icon2x: './images/universal/dog-icon-2x.png',
+  },
+  cat: {
+    name: 'Jack',
+    birthday: '18.10.2021',
+    description:
+      'Jack is a gray Persian cat with green eyes. He loves to be pampered and groomed, and enjoys playing with toys.',
+    icon1x: './images/universal/cat-icon-1x.png',
+    icon2x: './images/universal/cat-icon-2x.png',
+  },
 }
 
-onMounted(() => {
-  window.addEventListener('resize', updateWidth)
-})
+const petInfo = computed(() => petData[props.animal])
 
-onUnmounted(() => {
-  window.removeEventListener('resize', updateWidth)
-})
-
-const showInfo = computed(() => windowWidth.value >= 768)
+const getAnimalImagePath = (type, device, res) => `/images/${device}/${type}-1-${device}-${res}.png`
 
 const src = computed(() => ({
-  mobile1x:
-    props.animal === 'dog'
-      ? '/images/mobile/dog-1-mobile-1x.png'
-      : '/images/mobile/cat-1-mobile-1x.png',
-  mobile2x:
-    props.animal === 'dog'
-      ? '/images/mobile/dog-1-mobile-2x.png'
-      : '/images/mobile/cat-1-mobile-2x.png',
-  tablet1x:
-    props.animal === 'dog'
-      ? '/images/tablet/dog-1-tablet-1x.png'
-      : '/images/tablet/cat-1-tablet-1x.png',
-  tablet2x:
-    props.animal === 'dog'
-      ? '/images/tablet/dog-1-tablet-2x.png'
-      : '/images/tablet/cat-1-tablet-2x.png',
-  desktop1x:
-    props.animal === 'dog'
-      ? '/images/desktop/dog-1-desktop-1x.png'
-      : '/images/desktop/cat-1-desktop-1x.png',
-  desktop2x:
-    props.animal === 'dog'
-      ? '/images/desktop/dog-1-desktop-2x.png'
-      : '/images/desktop/cat-1-desktop-2x.png',
+  mobile1x: getAnimalImagePath(props.animal, 'mobile', '1x'),
+  mobile2x: getAnimalImagePath(props.animal, 'mobile', '2x'),
+  tablet1x: getAnimalImagePath(props.animal, 'tablet', '1x'),
+  tablet2x: getAnimalImagePath(props.animal, 'tablet', '2x'),
+  desktop1x: getAnimalImagePath(props.animal, 'desktop', '1x'),
+  desktop2x: getAnimalImagePath(props.animal, 'desktop', '2x'),
 }))
 
-const alt = computed(() => (props.animal === 'dog' ? 'Dog' : 'Cat'))
+const alt = computed(() => petInfo.value.name)
+
+const { width: windowWidth } = useWindowSize()
+const showInfo = computed(() => windowWidth.value >= 768)
 
 const iconSrc = computed(() => ({
-  img1x:
-    props.animal === 'dog'
-      ? './images/universal/dog-icon-1x.png'
-      : './images/universal/cat-icon-1x.png',
-  img2x:
-    props.animal === 'dog'
-      ? './images/universal/dog-icon-2x.png'
-      : './images/universal/cat-icon-2x.png',
-}))
-
-const petInfo = computed(() => ({
-  name: props.animal === 'dog' ? 'Rich' : 'Jack',
-  birthday: props.animal === 'dog' ? '21.09.2020' : '18.10.2021',
-  description:
-    props.animal === 'dog'
-      ? 'Rich would be the perfect addition to an active family that loves to play and go on walks. I bet he would love having a doggy playmate too!'
-      : 'Jack is a gray Persian cat with green eyes. He loves to be pampered and groomed, and enjoys playing with toys.',
+  img1x: petInfo.value.icon1x,
+  img2x: petInfo.value.icon2x,
 }))
 </script>
 
