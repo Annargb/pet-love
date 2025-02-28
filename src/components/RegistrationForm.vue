@@ -1,37 +1,68 @@
 <script setup>
-import { ref } from 'vue'
+import { reactive, watch } from 'vue'
+import { useForm, useField } from 'vee-validate'
+import { registerSchema } from '../utils/validationSchemas.js'
+import CommonTitle from './CommonTitle.vue'
 import FormInput from './FormInput.vue'
 import FormButton from './FormButton.vue'
 
-const name = ref('')
-const nameError = ref(null)
-const nameSuccess = ref(null)
+const { handleSubmit } = useForm({
+  validationSchema: registerSchema,
+})
 
-const email = ref('')
-const emailError = ref(null)
-const emailSuccess = ref(null)
+// const emit = defineEmits(['submit'])
+// const userData = reactive({
+//   name: '',
+//   email: '',
+//   password: '',
+//   confirmPassword: '',
+// })
 
-const password = ref('')
-const passwordError = ref(null)
-const passwordSuccess = ref(null)
+const { value: name, errorMessage: nameError } = useField('name')
+const { value: email, errorMessage: emailError } = useField('email')
+const { value: password, errorMessage: passwordError } = useField('password')
+const { value: confirmPassword, errorMessage: confirmPasswordError } = useField('confirmPassword')
 
-const confirmPassword = ref('')
-const confirmPasswordError = ref(null)
-const confirmPasswordSuccess = ref(null)
+const successMessages = reactive({
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+})
+
+watch(name, (newValue) => {
+  successMessages.name = newValue && !nameError.value ? 'Name is valid' : ''
+})
+
+watch(email, (newValue) => {
+  successMessages.email = newValue && !emailError.value ? 'Email is valid' : ''
+})
+
+watch(password, (newValue) => {
+  successMessages.password = newValue && !passwordError.value ? 'Password is secure' : ''
+})
+
+watch(confirmPassword, (newValue) => {
+  successMessages.confirmPassword = newValue && !confirmPasswordError.value ? 'Passwords match' : ''
+})
+
+const onSubmit = handleSubmit((values) => {
+  console.log('Form submitted with values:', values)
+})
 </script>
 
 <template>
   <div class="register-wrapper">
-    <h1 class="register-title">Registration</h1>
+    <CommonTitle>Registration</CommonTitle>
     <p class="register-text">Thank you for your interest in our platform.</p>
-    <form class="register-form">
+    <form @submit.prevent="onSubmit" class="register-form">
       <div class="input-wrapper">
         <FormInput
           v-model="name"
           type="text"
           placeholder="Name"
           :error="nameError"
-          :successMessage="nameSuccess"
+          :successMessage="successMessages.name"
         />
 
         <FormInput
@@ -39,7 +70,7 @@ const confirmPasswordSuccess = ref(null)
           type="email"
           placeholder="Email"
           :error="emailError"
-          :successMessage="emailSuccess"
+          :successMessage="successMessages.email"
         />
 
         <FormInput
@@ -47,7 +78,7 @@ const confirmPasswordSuccess = ref(null)
           type="password"
           placeholder="Password"
           :error="passwordError"
-          :successMessage="passwordSuccess"
+          :successMessage="successMessages.password"
         />
 
         <FormInput
@@ -55,10 +86,10 @@ const confirmPasswordSuccess = ref(null)
           type="password"
           placeholder="Confirm password"
           :error="confirmPasswordError"
-          :successMessage="confirmPasswordSuccess"
+          :successMessage="successMessages.confirmPassword"
         />
       </div>
-      <FormButton>Registration</FormButton>
+      <FormButton type="submit">Registration</FormButton>
     </form>
     <p class="register-footnote">Already have an account? Login</p>
   </div>
@@ -69,7 +100,8 @@ const confirmPasswordSuccess = ref(null)
   width: 100%;
   max-width: 335px;
   height: 422px;
-  padding: 27px 20px;
+  // padding: 27px 20px;
+  padding: 27px 20px 4px 20px;
   border-radius: 30px;
   background-color: var(--white);
 
@@ -77,7 +109,8 @@ const confirmPasswordSuccess = ref(null)
     max-width: 704px;
     width: 704px;
     height: 560px;
-    padding: 30px 140px;
+    // padding: 30px 140px;
+    padding: 30px 140px 4px 140px;
     border-radius: 60px;
   }
 
@@ -85,19 +118,8 @@ const confirmPasswordSuccess = ref(null)
     max-width: 592px;
     width: 592px;
     height: 654px;
-    padding: 77px 84px;
-  }
-}
-
-.register-title {
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--text-color);
-
-  @media screen and (min-width: 768px) {
-    font-size: 54px;
+    // padding: 77px 84px;
+    padding: 77px 84px 4px 84px;
   }
 }
 
@@ -127,7 +149,8 @@ const confirmPasswordSuccess = ref(null)
 .input-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  // gap: 10px;
+  gap: 20px;
   margin-bottom: 24px;
 
   @media screen and (min-width: 768px) {

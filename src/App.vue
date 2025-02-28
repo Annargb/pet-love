@@ -10,7 +10,7 @@ import RegistrationForm from './components/RegistrationForm.vue'
     <MainHeader />
     <main class="main">
       <PetBlock animal="dog" />
-      <RegistrationForm />
+      <RegistrationForm @submit="console.log" />
     </main>
   </AppContainer>
 </template>

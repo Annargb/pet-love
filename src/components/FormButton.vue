@@ -1,7 +1,15 @@
-<script setup></script>
+<script setup>
+const props = defineProps({
+  type: {
+    type: String,
+    default: 'button',
+    validator: (value) => ['button', 'submit', 'reset'].includes(value),
+  },
+})
+</script>
 
 <template>
-  <button class="form-button">
+  <button class="form-button" :type="props.type">
     <slot></slot>
   </button>
 </template>

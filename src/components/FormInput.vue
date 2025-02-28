@@ -20,9 +20,13 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const isVisiblePassword = ref(false)
-const inputType = computed(() =>
-  props.type === 'password' && isVisiblePassword.value ? 'text' : 'password',
-)
+
+const inputType = computed(() => {
+  if (props.type === 'password') {
+    return isVisiblePassword.value ? 'text' : 'password'
+  }
+  return props.type
+})
 
 const toggleVisibility = () => {
   isVisiblePassword.value = !isVisiblePassword.value
@@ -49,7 +53,7 @@ const inputClass = computed(() => {
       <PasswordButton
         v-if="type === 'password'"
         :isVisiblePassword="isVisiblePassword"
-        @toggle="toggleVisibility"
+        @changeVisibility="toggleVisibility"
       />
     </label>
 
@@ -62,7 +66,7 @@ const inputClass = computed(() => {
 .input-container {
   position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   max-width: 295px;
 
   @media screen and (min-width: 768px) {
@@ -73,12 +77,14 @@ const inputClass = computed(() => {
 .label {
   width: 100%;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 input {
   flex: 1;
   width: 100%;
-  padding: 12px;
+  padding: 12px 32px 12px 12px;
   height: 42px;
   border: 1px solid;
   border-radius: 30px;
@@ -91,7 +97,7 @@ input {
   transition: border-color 250ms ease;
 
   @media screen and (min-width: 768px) {
-    padding: 16px;
+    padding: 16px 32px 16px 16px;
     height: 52px;
     font-size: 16px;
     line-height: 1.25;
@@ -100,6 +106,10 @@ input {
 
 .input-default {
   border-color: var(--gray-color-2);
+
+  &:focus {
+    border-color: var(--orange);
+  }
 }
 
 .input-error {
@@ -110,19 +120,29 @@ input {
   border-color: var(--green);
 }
 
-.error-message {
+.error-message,
+.success-message {
+  position: absolute;
+  top: 42px;
+  padding-left: 12px;
   font-weight: 500;
-  font-size: 10px;
-  line-height: 1.2;
+  font-size: 9px;
+  line-height: 1;
   letter-spacing: -0.03em;
+
+  @media screen and (min-width: 768px) {
+    top: 54px;
+    padding-left: 16px;
+    font-size: 10px;
+    line-height: 1.2;
+  }
+}
+
+.error-message {
   color: var(--red);
 }
 
 .success-message {
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
   color: var(--green);
 }
 </style>
