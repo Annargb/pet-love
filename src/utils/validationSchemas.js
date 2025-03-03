@@ -22,7 +22,7 @@ export const registerSchema = yup.object({
     .min(7, 'Password must be at least 7 characters')
     .matches(
       passwordPattern,
-      'Password must include at least 1 uppercase and 1 lowercase letters, 1 number, and 1 special character (@$!%*?&)',
+      'Password must include uppercase and lowercase letters, a number, and a special character (@$!%*?&)',
     ),
   confirmPassword: yup
     .string()

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import PasswordButton from './PasswordButton.vue'
+import icons from '/icons/icons.svg'
 
 const props = defineProps({
   modelValue: String,
@@ -37,6 +38,12 @@ const inputClass = computed(() => {
   if (props.successMessage) return 'input-success'
   return 'input-default'
 })
+
+const iconName = computed(() => {
+  if (props.error) return 'icon-cross'
+  if (props.successMessage) return 'icon-check'
+  return ''
+})
 </script>
 
 <template>
@@ -49,6 +56,10 @@ const inputClass = computed(() => {
         @input="emit('update:modelValue', $event.target.value)"
         :class="inputClass"
       />
+
+      <svg v-if="iconName" class="input-icon">
+        <use :href="`${icons}#${iconName}`"></use>
+      </svg>
 
       <PasswordButton
         v-if="type === 'password'"
@@ -123,17 +134,17 @@ input {
 .error-message,
 .success-message {
   position: absolute;
-  top: 42px;
+  top: 43px;
   padding-left: 12px;
   font-weight: 500;
-  font-size: 9px;
+  font-size: 6px;
   line-height: 1;
   letter-spacing: -0.03em;
 
   @media screen and (min-width: 768px) {
     top: 54px;
     padding-left: 16px;
-    font-size: 10px;
+    font-size: 9px;
     line-height: 1.2;
   }
 }
@@ -144,5 +155,19 @@ input {
 
 .success-message {
   color: var(--green);
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 12px;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.label:has(.password-btn) .input-icon {
+  right: 38px;
 }
 </style>

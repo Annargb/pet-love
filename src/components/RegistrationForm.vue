@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, watch } from 'vue'
+import { reactive, watchEffect } from 'vue'
 import { useForm, useField } from 'vee-validate'
 import { registerSchema } from '../utils/validationSchemas.js'
 import CommonTitle from './CommonTitle.vue'
@@ -30,24 +30,32 @@ const successMessages = reactive({
   confirmPassword: '',
 })
 
-watch(name, (newValue) => {
-  successMessages.name = newValue && !nameError.value ? 'Name is valid' : ''
+watchEffect(() => {
+  successMessages.name = name.value && !nameError.value ? 'Name is valid' : ''
+  successMessages.email = email.value && !emailError.value ? 'Email is valid' : ''
+  successMessages.password = password.value && !passwordError.value ? 'Password is secure' : ''
+  successMessages.confirmPassword =
+    confirmPassword.value && !confirmPasswordError.value ? 'Passwords match' : ''
 })
 
-watch(email, (newValue) => {
-  successMessages.email = newValue && !emailError.value ? 'Email is valid' : ''
-})
+// watch(name, (newValue) => {
+//   successMessages.name = newValue && !nameError.value ? 'Name is valid' : ''
+// })
 
-watch(password, (newValue) => {
-  successMessages.password = newValue && !passwordError.value ? 'Password is secure' : ''
-})
+// watch(email, (newValue) => {
+//   successMessages.email = newValue && !emailError.value ? 'Email is valid' : ''
+// })
 
-watch(confirmPassword, (newValue) => {
-  successMessages.confirmPassword = newValue && !confirmPasswordError.value ? 'Passwords match' : ''
-})
+// watch(password, (newValue) => {
+//   successMessages.password = newValue && !passwordError.value ? 'Password is secure' : ''
+// })
 
-const onSubmit = handleSubmit((values) => {
-  console.log('Form submitted with values:', values)
+// watch(confirmPassword, (newValue) => {
+//   successMessages.confirmPassword = newValue && !confirmPasswordError.value ? 'Passwords match' : ''
+// })
+
+const onSubmit = handleSubmit(({ name, email, password }) => {
+  console.log('Form submitted with values:', { name, email, password })
 })
 </script>
 
@@ -100,8 +108,7 @@ const onSubmit = handleSubmit((values) => {
   width: 100%;
   max-width: 335px;
   height: 422px;
-  // padding: 27px 20px;
-  padding: 27px 20px 4px 20px;
+  padding: 27px 20px;
   border-radius: 30px;
   background-color: var(--white);
 
@@ -109,8 +116,7 @@ const onSubmit = handleSubmit((values) => {
     max-width: 704px;
     width: 704px;
     height: 560px;
-    // padding: 30px 140px;
-    padding: 30px 140px 4px 140px;
+    padding: 30px 140px;
     border-radius: 60px;
   }
 
@@ -118,8 +124,7 @@ const onSubmit = handleSubmit((values) => {
     max-width: 592px;
     width: 592px;
     height: 654px;
-    // padding: 77px 84px;
-    padding: 77px 84px 4px 84px;
+    padding: 77px 84px;
   }
 }
 
@@ -149,8 +154,7 @@ const onSubmit = handleSubmit((values) => {
 .input-wrapper {
   display: flex;
   flex-direction: column;
-  // gap: 10px;
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 24px;
 
   @media screen and (min-width: 768px) {
