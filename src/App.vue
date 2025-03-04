@@ -1,14 +1,9 @@
 <script setup>
-import MainHeader from './components/MainHeader.vue'
-import AppContainer from './components/AppContainer.vue'
-import RegistrationPage from './views/RegistrationPage.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <AppContainer>
-    <MainHeader />
-    <RegistrationPage />
-  </AppContainer>
+  <router-view />
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped></style>

@@ -1,14 +1,11 @@
 <script setup>
 import { reactive, watchEffect } from 'vue'
+import { RouterLink } from 'vue-router'
 import { useForm, useField } from 'vee-validate'
 import { registerSchema } from '../utils/validationSchemas.js'
 import CommonTitle from './CommonTitle.vue'
 import FormInput from './FormInput.vue'
 import FormButton from './FormButton.vue'
-
-const { handleSubmit } = useForm({
-  validationSchema: registerSchema,
-})
 
 // const emit = defineEmits(['submit'])
 // const userData = reactive({
@@ -17,6 +14,10 @@ const { handleSubmit } = useForm({
 //   password: '',
 //   confirmPassword: '',
 // })
+
+const { handleSubmit } = useForm({
+  validationSchema: registerSchema,
+})
 
 const { value: name, errorMessage: nameError } = useField('name')
 const { value: email, errorMessage: emailError } = useField('email')
@@ -37,22 +38,6 @@ watchEffect(() => {
   successMessages.confirmPassword =
     confirmPassword.value && !confirmPasswordError.value ? 'Passwords match' : ''
 })
-
-// watch(name, (newValue) => {
-//   successMessages.name = newValue && !nameError.value ? 'Name is valid' : ''
-// })
-
-// watch(email, (newValue) => {
-//   successMessages.email = newValue && !emailError.value ? 'Email is valid' : ''
-// })
-
-// watch(password, (newValue) => {
-//   successMessages.password = newValue && !passwordError.value ? 'Password is secure' : ''
-// })
-
-// watch(confirmPassword, (newValue) => {
-//   successMessages.confirmPassword = newValue && !confirmPasswordError.value ? 'Passwords match' : ''
-// })
 
 const onSubmit = handleSubmit(({ name, email, password }) => {
   console.log('Form submitted with values:', { name, email, password })
@@ -99,7 +84,10 @@ const onSubmit = handleSubmit(({ name, email, password }) => {
       </div>
       <FormButton type="submit">Registration</FormButton>
     </form>
-    <p class="register-footnote">Already have an account? Login</p>
+    <p class="register-footnote">
+      Already have an account?
+      <router-link to="login" class="register-link">Login</router-link>
+    </p>
   </div>
 </template>
 
@@ -108,7 +96,7 @@ const onSubmit = handleSubmit(({ name, email, password }) => {
   width: 100%;
   max-width: 335px;
   height: 422px;
-  padding: 27px 20px;
+  padding: 20px;
   border-radius: 30px;
   background-color: var(--white);
 
@@ -116,7 +104,7 @@ const onSubmit = handleSubmit(({ name, email, password }) => {
     max-width: 704px;
     width: 704px;
     height: 560px;
-    padding: 30px 140px;
+    padding: 26px 140px;
     border-radius: 60px;
   }
 
@@ -124,7 +112,7 @@ const onSubmit = handleSubmit(({ name, email, password }) => {
     max-width: 592px;
     width: 592px;
     height: 654px;
-    padding: 77px 84px;
+    padding: 68px 84px;
   }
 }
 
@@ -179,6 +167,16 @@ const onSubmit = handleSubmit(({ name, email, password }) => {
     margin-top: 16px;
     font-size: 14px;
     line-height: 1.43;
+  }
+}
+
+.register-link {
+  color: var(--orange);
+  text-decoration: none;
+  transition: color var(--transition);
+
+  &:hover {
+    color: var(--orange-1);
   }
 }
 </style>

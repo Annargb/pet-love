@@ -105,7 +105,7 @@ input {
   letter-spacing: -0.03em;
   color: var(--gray-color);
   outline: none;
-  transition: border-color 250ms ease;
+  transition: border-color var(--transition);
 
   @media screen and (min-width: 768px) {
     padding: 16px 32px 16px 16px;

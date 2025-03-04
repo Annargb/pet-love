@@ -31,7 +31,7 @@ const props = defineProps({
   color: var(--white);
   cursor: pointer;
   outline: none;
-  transition: background-color 250ms ease;
+  transition: background-color var(--transition);
 
   &:hover,
   &:focus {

@@ -1,5 +1,13 @@
+<script setup>
+import AppContainer from '@/components/AppContainer.vue'
+import MainHeader from '@/components/MainHeader.vue'
+</script>
+
 <template>
-  <main>
-    <slot></slot>
-  </main>
+  <AppContainer>
+    <MainHeader />
+    <main>
+      <slot></slot>
+    </main>
+  </AppContainer>
 </template>

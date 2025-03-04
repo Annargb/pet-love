@@ -30,3 +30,20 @@ export const registerSchema = yup.object({
     .required('Confirm password is required')
     .oneOf([yup.ref('password')], 'Passwords do not match'),
 })
+
+export const loginSchema = yup.object({
+  email: yup
+    .string()
+    .trim()
+    .required('Email is required')
+    .matches(emailPattern, 'Please enter a valid email'),
+  password: yup
+    .string()
+    .trim()
+    .required('Password is required')
+    .min(7, 'Password must be at least 7 characters')
+    .matches(
+      passwordPattern,
+      'Password must include uppercase and lowercase letters, a number, and a special character (@$!%*?&)',
+    ),
+})

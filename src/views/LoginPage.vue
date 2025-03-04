@@ -1,20 +1,20 @@
 <script setup>
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import PetBlock from '../components/PetBlock.vue'
-import RegistrationForm from '../components/RegistrationForm.vue'
+import LoginForm from '@/components/LoginForm.vue'
 </script>
 
 <template>
   <BaseLayout>
-    <div class="registration-page-container">
-      <PetBlock animal="cat" />
-      <RegistrationForm @submit="console.log" />
+    <div class="login-page-container">
+      <PetBlock animal="dog" />
+      <LoginForm @submit="console.log" />
     </div>
   </BaseLayout>
 </template>
 
 <style scoped lang="scss">
-.registration-page-container {
+.login-page-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
