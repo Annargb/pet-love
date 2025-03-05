@@ -1,6 +1,7 @@
 :root {
   --main-white: #f9f9f9;
   --white: #ffffff;
+  --white-1: rgba(255, 255, 255, 0.4);
   --text-color: #262626;
   --gray-color: rgba(38, 38, 38, 0.5);
   --gray-color-1: rgba(38, 38, 38, 0.8);
