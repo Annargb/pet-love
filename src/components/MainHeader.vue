@@ -1,7 +1,8 @@
 <script setup>
-import { defineProps, computed } from 'vue'
+import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import icons from '/icons/icons.svg'
+import { useWindowSize } from '@vueuse/core'
+import BurgerMenu from './BurgerMenu.vue'
 
 const props = defineProps({
   isHomePage: {
@@ -27,6 +28,9 @@ const logoPaths = computed(() => ({
     ? '/images/tablet/logo-universal-white-2x.png'
     : '/images/tablet/logo-universal-2x.png',
 }))
+
+const { width: windowWidth } = useWindowSize()
+const showBurgerMenu = computed(() => windowWidth.value < 1280)
 </script>
 
 <template>
@@ -44,11 +48,7 @@ const logoPaths = computed(() => ({
         <img :src="logoPaths.mobile1x" alt="Logo" class="logo" />
       </picture>
     </router-link>
-    <button type="button" class="burger-btn">
-      <svg class="burger-icon">
-        <use :href="`${icons}#icon-menu`" width="32" height="32"></use>
-      </svg>
-    </button>
+    <BurgerMenu v-if="showBurgerMenu" :isHomePage="isHomePage" />
   </header>
 </template>
 
@@ -88,23 +88,6 @@ const logoPaths = computed(() => ({
   @media screen and (min-width: 768px) {
     width: 105px;
     height: 28px;
-  }
-}
-
-.burger-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  .burger-icon {
-    width: 32px;
-    height: 32px;
-    fill: red;
   }
 }
 </style>
