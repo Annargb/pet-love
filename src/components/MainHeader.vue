@@ -46,7 +46,7 @@ const logoPaths = computed(() => ({
     </router-link>
     <button type="button" class="burger-btn">
       <svg class="burger-icon">
-        <use :href="`${icons}#icon-menu`"></use>
+        <use :href="`${icons}#icon-menu`" width="32" height="32"></use>
       </svg>
     </button>
   </header>
@@ -100,11 +100,11 @@ const logoPaths = computed(() => ({
   background: none;
   border: none;
   cursor: pointer;
-}
 
-.burger-icon {
-  width: 32px;
-  height: 32px;
-  fill: var(--text-color);
+  .burger-icon {
+    width: 32px;
+    height: 32px;
+    fill: red;
+  }
 }
 </style>
